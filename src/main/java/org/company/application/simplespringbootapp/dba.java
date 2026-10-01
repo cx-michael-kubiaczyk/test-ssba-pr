@@ -1,22 +1,24 @@
 package org.company.application.simplespringbootapp;
 
-import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.sql.Connection;
-import java.sql.ResultSet;
 
 
 
 public class dba {
 	private Connection connect = null;
-	private Statement stmt = null;
-	
+
 	public String db_lookup ( String str ) {
-		// some kind of lookup
+		// Use a parameterized PreparedStatement to prevent SQL injection.
+		// The '?' placeholder is bound via setString(), which ensures the
+		// user-supplied value is treated as data, not as SQL syntax.
 		try {
-			String squery = "select * from somewhere where something='" + str + "';";
-		
-			String response = stmt.executeQuery( squery );
-		
+			String squery = "select * from somewhere where something=?";
+
+			PreparedStatement pstmt = connect.prepareStatement( squery );
+			pstmt.setString( 1, str );
+			String response = pstmt.executeQuery().toString();
+
 			return response;
 		} catch ( Exception e ) { };
 	}
@@ -24,11 +26,6 @@ public class dba {
 	public void init( Connection conn, String password ) {
 		if ( password.Equals("password") ) {
 			connect = conn;
-			try {
-				stmt = conn.createStatement();
-			} catch ( Exception e ) {
-
-			}
 		}
 	}
 }

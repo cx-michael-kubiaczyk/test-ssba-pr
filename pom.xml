@@ -20,6 +20,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
+    <!-- Override jackson-databind to remediate CVE-2020-9548 (and related gadget chain CVEs).
+         Spring Boot 2.1.x BOM picks up jackson-databind 2.9.8; we pin it to 2.18.11. -->
+    <jackson.version>2.18.11</jackson.version>
   </properties>
 
 </project>

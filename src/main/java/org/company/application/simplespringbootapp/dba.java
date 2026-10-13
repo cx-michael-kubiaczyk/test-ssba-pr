@@ -1,6 +1,6 @@
 package org.company.application.simplespringbootapp;
 
-import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 
@@ -8,27 +8,24 @@ import java.sql.ResultSet;
 
 public class dba {
 	private Connection connect = null;
-	private Statement stmt = null;
-	
+
 	public String db_lookup ( String str ) {
-		// some kind of lookup
+		// Use a parameterized query to prevent SQL injection
 		try {
-			String squery = "select * from somewhere where something='" + str + "';";
-		
-			String response = stmt.executeQuery( squery );
-		
-			return response;
+			String squery = "select * from somewhere where something=?";
+
+			PreparedStatement pstmt = connect.prepareStatement( squery );
+			pstmt.setString( 1, str );
+			ResultSet response = pstmt.executeQuery();
+
+			return response.toString();
 		} catch ( Exception e ) { };
+		return null;
 	}
-	
+
 	public void init( Connection conn, String password ) {
 		if ( password.Equals("password") ) {
 			connect = conn;
-			try {
-				stmt = conn.createStatement();
-			} catch ( Exception e ) {
-
-			}
 		}
 	}
 }

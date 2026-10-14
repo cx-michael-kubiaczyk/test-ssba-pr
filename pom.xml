@@ -20,6 +20,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
+    <!-- Override embedded Tomcat version to remediate CVE-2024-50379 (TOCTOU RCE) -->
+    <tomcat.version>9.0.122</tomcat.version>
   </properties>
 
 </project>

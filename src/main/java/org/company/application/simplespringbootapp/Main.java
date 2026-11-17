@@ -3,6 +3,7 @@ package org.company.application.simplespringbootapp;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 import org.company.security.sanitizers;
 import org.something.somewhere.TcParametros;
 import org.something.somewhere.TcParametrosRepository;
@@ -51,7 +52,8 @@ public class Main {
 	@GetMapping( value= "/oldinfo" )
 	@ResponseBody 
 	public String oldinfo(@RequestParam(required=false) String email ) {
-		return oldInfoPage.showInfo( email );		
+		// HTML-encode the request parameter before it is reflected in the response (null stays null)
+		return oldInfoPage.showInfo( HtmlUtils.htmlEscape( email ) );
 	}
 	
 	@GetMapping( value= "/scrtbdr" )

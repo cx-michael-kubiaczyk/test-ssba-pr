@@ -20,6 +20,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
+    <!-- Override Spring Boot managed Tomcat (9.0.16) to fix CVE-2026-41293 -->
+    <tomcat.version>9.0.123</tomcat.version>
   </properties>
 
 </project>

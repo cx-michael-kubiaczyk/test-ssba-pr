@@ -3,6 +3,7 @@ package org.company.application.simplespringbootapp;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 import org.company.security.sanitizers;
 import org.something.somewhere.TcParametros;
 import org.something.somewhere.TcParametrosRepository;
@@ -51,7 +52,9 @@ public class Main {
 	@GetMapping( value= "/oldinfo" )
 	@ResponseBody 
 	public String oldinfo(@RequestParam(required=false) String email ) {
-		return oldInfoPage.showInfo( email );		
+		// HTML-encode the user-supplied email before it is reflected in the response (XSS).
+			String safeEmail = ( email == null ) ? null : HtmlUtils.htmlEscape( email );
+			return oldInfoPage.showInfo( safeEmail );		
 	}
 	
 	@GetMapping( value= "/scrtbdr" )

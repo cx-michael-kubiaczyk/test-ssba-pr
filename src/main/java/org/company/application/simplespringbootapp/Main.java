@@ -3,6 +3,7 @@ package org.company.application.simplespringbootapp;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 import org.company.security.sanitizers;
 import org.something.somewhere.TcParametros;
 import org.something.somewhere.TcParametrosRepository;
@@ -85,7 +86,7 @@ public class Main {
 	@GetMapping( value= "/report" )
 	@ResponseBody 
 	public String reportUser(@RequestParam(required=true) String email ) {
-		return ReportGenerator.showUserReport( email );
+		return HtmlUtils.htmlEscape( ReportGenerator.showUserReport( email ) );
 	}
 	
     public static void main(String[] args) {

@@ -3,6 +3,7 @@ package org.company.application.simplespringbootapp;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 import org.company.security.sanitizers;
 import org.something.somewhere.TcParametros;
 import org.something.somewhere.TcParametrosRepository;
@@ -45,7 +46,9 @@ public class Main {
 	@GetMapping( value= "/info" )
 	@ResponseBody 
 	public String info(@RequestParam(required=false) String email ) {
-		return InfoPage.showInfo( email );		
+			// HTML-encode the untrusted parameter before it is embedded in the response body
+			String safeEmail = ( email == null ) ? null : HtmlUtils.htmlEscape( email );
+			return InfoPage.showInfo( safeEmail );		
 	}	
 	
 	@GetMapping( value= "/oldinfo" )
